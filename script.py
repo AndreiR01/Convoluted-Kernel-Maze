@@ -16,7 +16,9 @@ def build_maze(m, n, swag):
     start_i = randint(0, m - 1)
     start_j = randint(0, n - 1)
     grid[start_i][start_j] = 'start'
+    #mowing the maze by creating empty cells using recursion
     mow(grid, start_i, start_j)
+    #exploring the maze using using a BFS algorithms and dropping "candy" and finding the end of the of the
     explore_maze(grid, start_i, start_j, swag)
     return grid
 
@@ -95,7 +97,7 @@ def explore_maze(grid, start_i, start_j, swag):
             elif grid_copy[explore_i][explore_j] != 'visited' and grid_copy[explore_i][explore_j] != 'wall':
                 bfs_queue.append([explore_i, explore_j])
     #value for current_i and current_j is the last furthest stop, set as end.
-    grid[current_i][current_j] = 'end'
+    grid[current_i][current_j] = 'E'
 
 
 def print_maze(grid): # function takes care of formatting the maze
@@ -105,7 +107,7 @@ def print_maze(grid): # function takes care of formatting the maze
             if cell == 'wall':
                 char = '|'
             elif cell == 'start':
-                char = 'S'
+                char = 'X'
             elif cell == 'empty':
                 char = ' '
             else:
