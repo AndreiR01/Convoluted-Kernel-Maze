@@ -1,6 +1,6 @@
 from random import randint
 
-def build_maze(m, n, swag):
+def build_maze(m, n, candy):
     grid = []
     #2 nested for loops in order to create a 2D array(linked lists)
     for i in range(m):
@@ -19,11 +19,11 @@ def build_maze(m, n, swag):
     #mowing the maze by creating empty cells using recursion
     mow(grid, start_i, start_j)
     #exploring the maze using using a BFS algorithms and dropping "candy" and finding the end of the of the
-    explore_maze(grid, start_i, start_j, swag)
+    explore_maze(grid, start_i, start_j, candy)
     return grid
 
 
-#Recursively function which randomly picks a direction to explore from the 'start' point. It moves 2 places in that direction and then if that place is a "wall" it will set the cell to empty. Also the cell connecting start and the empty cell is also set to empty so a path is emerged.
+#Recursive algorithm(Depth First Search) which randomly picks a direction to explore from the 'start' point. It moves 2 places in that direction and then if that place is a "wall" it will set the cell to empty. Also the cell connecting start and the empty cell is also set to empty so a path is emerged.
 
 def mow(grid, i, j):
     #i - COLUMN index
@@ -67,8 +67,8 @@ def mow(grid, i, j):
                 mow(grid, i, j + 2) #recursively calling mow from  the place we just mowed
     return
 
-
-def explore_maze(grid, start_i, start_j, swag):
+# Breadth First Search implemented in order to drop candy in our maze
+def explore_maze(grid, start_i, start_j, candy):
     grid_copy = [row [:] for row in grid]
     bfs_queue = [ [start_i, start_j] ]
     directions = ['U', 'D', 'L', 'R']
@@ -77,7 +77,7 @@ def explore_maze(grid, start_i, start_j, swag):
         current_i, current_j = bfs_queue.pop(0)
         # if we are not on start and between
         if grid[current_i][current_j] != 'start' and randint(1,10) == 1:
-            grid[current_i][current_j] = swag[randint(0, len(swag) - 1)] #-1 is used because the length of the list is one extra than the index of the last element of the list
+            grid[current_i][current_j] = candy[randint(0, len(candy) - 1)] #-1 is used because the length of the list is one extra than the index of the last element of the list
         grid_copy[current_i][current_j] = 'visited'
         for direction in directions:
             explore_i = current_i
